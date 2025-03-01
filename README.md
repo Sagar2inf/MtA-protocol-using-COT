@@ -1,5 +1,6 @@
 ## How to execute code:
 g++ Codes/source_code.cpp -o OT -lssl -lcrypto
+
 ./OT
 
 Enter 1 for manual input, 0 for random input.
