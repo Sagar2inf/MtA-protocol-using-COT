@@ -232,10 +232,8 @@ void mta_protocol(const FieldElement *a, const FieldElement *b, FieldElement *c,
     field_add(d, &k, &r_prime, order);
     
     // Step 9: Alice computes her additive share c = (r + 0) mod order
-    // This is different from the previous implementation - Alice keeps r as her share
     BN_copy(c->value, r.value);
-    
-    // Let's verify internally that c + d = a * b
+
     FieldElement sum;
     field_init(&sum);
     field_add(&sum, c, d, order);
@@ -243,7 +241,7 @@ void mta_protocol(const FieldElement *a, const FieldElement *b, FieldElement *c,
     if (BN_cmp(sum.value, expected_product.value) != 0) {
         // If verification fails, adjust one of the shares to ensure correctness
         printf("DEBUG - Internal verification failed, adjusting shares...\n");
-        // Compute the correct value for d: d = a*b - c
+        
         field_sub(d, &expected_product, c, order);
     }
     
